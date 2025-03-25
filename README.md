@@ -1,70 +1,99 @@
-# Getting Started with Create React App
+# 🌦️ Weather Forecast App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack web application that displays 5-day weather forecasts and logs user actions to a backend server and database.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 📦 Features
 
-### `npm start`
+### 🌐 Frontend (React + Material UI + SASS)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Responsive layout
+- Searchable city input with live results via [Open-Meteo Geocoding API](https://open-meteo.com/en/docs/geocoding-api)
+- Displays 3 most-viewed cities using `localStorage`
+- Shows selected city's:
+  - Temperature
+  - Humidity
+  - Wind speed
+  - Timestamp
+- 5-day weather forecast with:
+  - Min/Max temperatures
+  - Precipitation
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 🔧 Backend (Node.js + Express + SQLite)
 
-### `npm test`
+- Logs user city selections
+- Stores log entries in a lightweight SQLite database
+- Optional `/logs` route for viewing stored entries
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🌐 External APIs
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Weather Forecast API:** https://api.open-meteo.com/v1/forecast
+- **Geocoding API:** https://geocoding-api.open-meteo.com/v1/search?name=City
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🧰 Tech Stack
 
-### `npm run eject`
+| Layer         | Technology                     |
+| ------------- | ------------------------------ |
+| Front-end     | React, Material UI, SASS       |
+| Back-end      | Node.js, Express               |
+| API           | Open-Meteo Weather + Geocoding |
+| Database      | SQLite (file-based)            |
+| State Storage | localStorage                   |
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🛠️ Setup Instructions
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 🧱 1. Clone the Repository
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+git clone https://github.com/YOUR_USERNAME/weather-app.git
+cd weather-forecast
+```
 
-## Learn More
+### 🌐 2. Run the Frontend
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm install
+npm start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 🌐 3. Run the Backend
 
-### Code Splitting
+```bash
+cd ../backend
+npm install
+node server.js
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## ✅ Tests
 
-### Analyzing the Bundle Size
+This project includes both frontend and backend unit tests.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 🧪 Frontend (React)
 
-### Making a Progressive Web App
+- Tested using **Jest** and **React Testing Library**
+- Covers rendering of current weather and 5-day forecast
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Run tests:
 
-### Advanced Configuration
+```bash
+npm test
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 🧪 Backend (React)
 
-### Deployment
+- POST /log – logs user actions to SQLite DB
+- 400 response for missing cityName
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Run tests:
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+cd backend
+npm test
+```

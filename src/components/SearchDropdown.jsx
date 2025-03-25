@@ -40,8 +40,8 @@ const SearchDropdown = ({ onCitySelect }) => {
   return (
     <Box>
       <Autocomplete
-        options={options}
-        getOptionLabel={(option) => option.name}
+        options={options || []}
+        getOptionLabel={(option) => option?.name || ""}
         onChange={handleSelect}
         inputValue={inputValue}
         onInputChange={(e, newInputValue) => setInputValue(newInputValue)}
