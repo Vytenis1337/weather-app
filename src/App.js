@@ -15,7 +15,7 @@ function App() {
     const data = await fetchWeatherData(city.lat, city.lon);
     setWeatherData(data);
 
-    await axios.post("http://localhost:4000/log", {
+    await axios.post(`${process.env.REACT_APP_API_BASE}/log`, {
       cityName: city.name,
     });
   };

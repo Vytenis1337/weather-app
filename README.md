@@ -1,6 +1,14 @@
 # 🌦️ Weather Forecast App
 
-A full-stack web application that displays 5-day weather forecasts and logs user actions to a backend server and database.
+A full-stack web application that displays 5-day weather forecasts and logs user actions to a backend server and Firestore database.  
+Deployed on **Firebase Hosting** (frontend) and **Google App Engine** (backend).
+
+---
+
+## 🌍 Live Links
+
+- **Frontend:** [https://weather-app-gcp-454913.web.app]
+- **Backend (logs route):** [https://weather-app-gcp-454913.ew.r.appspot.com/logs]
 
 ---
 
@@ -22,9 +30,9 @@ A full-stack web application that displays 5-day weather forecasts and logs user
 
 ### 🔧 Backend (Node.js + Express + SQLite)
 
-- Logs user city selections
-- Stores log entries in a lightweight SQLite database
-- Optional `/logs` route for viewing stored entries
+- Logs city selections via `/log` POST route
+- Stores user actions in a **Firestore** database
+- Optional `/logs` GET route for viewing saved entries
 
 ---
 
@@ -37,13 +45,14 @@ A full-stack web application that displays 5-day weather forecasts and logs user
 
 ## 🧰 Tech Stack
 
-| Layer         | Technology                     |
-| ------------- | ------------------------------ |
-| Front-end     | React, Material UI, SASS       |
-| Back-end      | Node.js, Express               |
-| API           | Open-Meteo Weather + Geocoding |
-| Database      | SQLite (file-based)            |
-| State Storage | localStorage                   |
+| Layer         | Technology                                   |
+| ------------- | -------------------------------------------- |
+| Front-end     | React, Material UI, SASS                     |
+| Back-end      | Node.js, Express                             |
+| API           | Open-Meteo Weather + Geocoding               |
+| Database      | Firestore (NoSQL, serverless)                |
+| Hosting       | Firebase Hosting (Frontend), App Engine (BE) |
+| State Storage | localStorage                                 |
 
 ---
 
@@ -91,8 +100,9 @@ npm test
 
 ### 🧪 Backend (React)
 
-- POST /log – logs user actions to SQLite DB
-- 400 response for missing cityName
+- POST /log – logs user actions to Firestore
+- Mocks Firestore during tests to avoid real database writes
+- Handles missing cityName with 400 Bad Request response
 
 Run tests:
 

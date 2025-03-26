@@ -1,48 +1,58 @@
 const express = require("express");
 const cors = require("cors");
-const db = require("./db");
+const db = require("./firebase");
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://weather-app-gcp-454913.web.app",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 app.use(express.json());
 
-app.post("/log", (req, res) => {
+app.post("/log", async (req, res) => {
   const { cityName } = req.body;
   if (!cityName) {
-    return res.status(400).json({ error: "City name is required" }); // ✅
+    return res.status(400).json({ error: "City name is required" });
   }
 
-  const timestamp = new Date().toISOString().replace("T", " ").split(".")[0];
+  const timestamp = new Date().toISOString();
 
-  db.run(
-    `INSERT INTO user_actions (city_name, timestamp) VALUES (?, ?)`,
-    [cityName, timestamp],
-    function (err) {
-      if (err) {
-        console.error("❌ Error inserting into DB:", err.message);
-        return res.status(500).json({ error: "Failed to log action" });
-      }
+  try {
+    await db.collection("user_actions").add({
+      city_name: cityName,
+      timestamp,
+    });
 
-      console.log(`📍 Logged: ${cityName} @ ${timestamp}`);
-      res.status(200).json({ message: "Logged and saved to DB" });
-    }
-  );
+    console.log(`📍 Logged to Firestore: ${cityName} @ ${timestamp}`);
+    res.status(200).json({ message: "Logged to Firestore" });
+  } catch (err) {
+    console.error("Firestore error:", err.message);
+    res.status(500).json({ error: "Failed to log to Firestore" });
+  }
 });
 
-app.get("/logs", (req, res) => {
-  db.all(`SELECT * FROM user_actions ORDER BY id DESC`, [], (err, rows) => {
-    if (err) {
-      return res.status(500).json({ error: "Failed to fetch logs" });
-    }
-    res.json(rows);
-  });
+app.get("/logs", async (req, res) => {
+  try {
+    const snapshot = await db
+      .collection("user_actions")
+      .orderBy("timestamp", "desc")
+      .get();
+    const logs = snapshot.docs.map((doc) => doc.data());
+    res.json(logs);
+  } catch (err) {
+    console.error("Error fetching logs:", err.message);
+    res.status(500).json({ error: "Failed to fetch logs" });
+  }
 });
 
 if (require.main === module) {
   app.listen(PORT, () => {
-    console.log(`✅ Server running at http://localhost:${PORT}`);
+    console.log(`✅ Server running on port ${PORT}`);
   });
 }
 
