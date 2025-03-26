@@ -79,6 +79,9 @@ This project includes both frontend and backend unit tests.
 
 - Tested using **Jest** and **React Testing Library**
 - Covers rendering of current weather and 5-day forecast
+- User input, async search results, and selection handling
+- Transforms API response to include closest humidity data
+- Fetches geocoding data from Open-Meteo and maps it
 
 Run tests:
 

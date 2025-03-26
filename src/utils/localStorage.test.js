@@ -11,5 +11,5 @@ test("saves and retrieves viewed cities", () => {
   saveCity("Berlin");
 
   const cities = getViewedCities();
-  expect(cities).toEqual(["Berlin", "Tokyo", "London"]); // max 3, newest first
+  expect(cities).toEqual(["Berlin", "Tokyo", "London"]);
 });
